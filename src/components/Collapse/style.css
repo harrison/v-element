@@ -1,0 +1,67 @@
+.ds-collapse {
+  --ds-collapse-border-color: var(--ds-border-color-light);
+  --ds-collapse-header-height: 48px;
+  --ds-collapse-header-bg-color: var(--ds-fill-color-blank);
+  --ds-collapse-header-text-color: var(--ds-text-color-primary);
+  --ds-collapse-header-font-size: 13px;
+  --ds-collapse-content-bg-color: var(--ds-fill-color-blank);
+  --ds-collapse-content-font-size: 13px;
+  --ds-collapse-content-text-color: var(--ds-text-color-primary);
+  --ds-collapse-disabled-text-color: var(--ds-disabled-text-color);
+  --ds-collapse-disabled-border-color: var(--ds-border-color-lighter);
+  border-top: 1px solid var(--ds-collapse-border-color);
+  border-bottom: 1px solid var(--ds-collapse-border-color);
+}
+
+.ds-collapse-item {
+  border-bottom: 1px solid var(--ds-collapse-border-color);
+
+  .ds-collapse-item__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--ds-collapse-header-height);
+    line-height: var(--ds-collapse-header-height);
+    background-color: var(--ds-collapse-header-bg-color);
+    color: var(--ds-collapse-header-text-color);
+    cursor: pointer;
+    font-size: var(--ds-collapse-header-font-size);
+    font-weight: 500;
+    transition: border-bottom-color var(--ds-transition-duration);
+    outline: none;
+
+
+    &.is-disabled {
+      color: var(--ds-collapse-disabled-text-color);
+      cursor: not-allowed;
+      background-image: none;
+    }
+
+    &.is-active {
+      border-bottom-color: transparent;
+      .header-angle {
+        transform: rotate(90deg);
+      }
+    }
+
+    .header-angle {
+      transition: transform var(--ds-transition-duration);
+    }
+  }
+  .ds-collapse-item__content__wrapper {
+    overflow: hidden;
+    .ds-collapse-item__content {
+      will-change: height;
+      background-color: var(--ds-collapse-content-bg-color);
+      overflow: hidden;
+      box-sizing: border-box;
+      font-size: var(--ds-collapse-content-font-size);
+      color: var(--ds-collapse-content-text-color);
+      padding-bottom: 25px;
+    }
+  }
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: height var(--ds-transition-duration);
+  }
+}

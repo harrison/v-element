@@ -1,0 +1,72 @@
+:root {
+  /* colors */
+  --ds-color-white: #ffffff;
+  --ds-color-black: #000000;
+  --colors: (
+    primary: #409eff,
+    success: #67c23a,
+    warning: #e6a23c,
+    danger: #f56c6c,
+    info: #909399
+  );
+  @each $type, $color in var(--colors) {
+    --ds-color-$(type): $(color);
+    @for $i from 3 to 9 by 2{
+      --ds-color-$(type)-light-$(i): mix(#fff, $(color), .$(i))
+    }
+    --ds-color-$(type)-light-8: mix(#fff, $(color), .8);
+    --ds-color-$(type)-dark-2: mix(#000, $(color), .2);
+  }
+  
+
+  --ds-bg-color: #ffffff;
+  --ds-bg-color-page: #f2f3f5;
+  --ds-bg-color-overlay: #ffffff;
+  --ds-text-color-primary: #303133;
+  --ds-text-color-regular: #606266;
+  --ds-text-color-secondary: #909399;
+  --ds-text-color-placeholder: #a8abb2;
+  --ds-text-color-disabled: #c0c4cc;
+  --ds-border-color: #dcdfe6;
+  --ds-border-color-light: #e4e7ed;
+  --ds-border-color-lighter: #ebeef5;
+  --ds-border-color-extra-light: #f2f6fc;
+  --ds-border-color-dark: #d4d7de;
+  --ds-border-color-darker: #cdd0d6;
+  --ds-fill-color: #f0f2f5;
+  --ds-fill-color-light: #f5f7fa;
+  --ds-fill-color-lighter: #fafafa;
+  --ds-fill-color-extra-light: #fafcff;
+  --ds-fill-color-dark: #ebedf0;
+  --ds-fill-color-darker: #e6e8eb;
+  --ds-fill-color-blank: #ffffff;
+
+  /* border */
+  --ds-border-width: 1px;
+  --ds-border-style: solid;
+  --ds-border-color-hover: var(--ds-text-color-disabled);
+  --ds-border: var(--ds-border-width) var(--ds-border-style) var(--ds-border-color);
+  --ds-border-radius-base: 4px;
+  --ds-border-radius-small: 2px;
+  --ds-border-radius-round: 20px;
+  --ds-border-radius-circle: 100%;
+
+  /*font*/
+  --ds-font-size-extra-large: 20px;
+  --ds-font-size-large: 18px;
+  --ds-font-size-medium: 16px;
+  --ds-font-size-base: 14px;
+  --ds-font-size-small: 13px;
+  --ds-font-size-extra-small: 12px;
+  --ds-font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "\5fae\8f6f\96c5\9ed1", Arial, sans-serif;
+  --ds-font-weight-primary: 500;
+
+  /*disabled*/
+  --ds-disabled-bg-color: var(--ds-fill-color-light);
+  --ds-disabled-text-color: var(--ds-text-color-placeholder);
+  --ds-disabled-border-color: var(--ds-border-color-light);
+
+  /* duration */
+  --ds-transition-duration: 0.3s;
+  --ds-transition-duration-fast: 0.2s;
+}

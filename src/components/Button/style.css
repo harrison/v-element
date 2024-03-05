@@ -1,0 +1,128 @@
+.ds-button {
+  --ds-button-font-weight: var(--ds-font-weight-primary);
+  --ds-button-border-color: var(--ds-border-color);
+  --ds-button-bg-color: var(--ds-fill-color-blank);
+  --ds-button-text-color: var(--ds-text-color-regular);
+  --ds-button-disabled-text-color: var(--ds-disabled-text-color);
+  --ds-button-disabled-bg-color: var(--ds-fill-color-blank);
+  --ds-button-disabled-border-color: var(--ds-border-color-light);
+  --ds-button-hover-text-color: var(--ds-color-primary);
+  --ds-button-hover-bg-color: var(--ds-color-primary-light-9);
+  --ds-button-hover-border-color: var(--ds-color-primary-light-7);
+  --ds-button-active-text-color: var(--ds-button-hover-text-color);
+  --ds-button-active-border-color: var(--ds-color-primary);
+  --ds-button-active-bg-color: var(--ds-button-hover-bg-color);
+  --ds-button-outline-color: var(--ds-color-primary-light-5);
+  --ds-button-active-color: var(--ds-text-color-primary);
+}
+
+.ds-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  height: 32px;
+  white-space: nowrap;
+  cursor: pointer;
+  color: var(--ds-button-text-color);
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  transition: .1s;
+  font-weight: var(--ds-button-font-weight);
+  user-select: none;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  background-color: var(--ds-button-bg-color);
+  border: var(--ds-border);
+  border-color: var(--ds-button-border-color);
+  padding: 8px 15px;
+  font-size: var(--ds-font-size-base);
+  border-radius: var(--ds-border-radius-base);
+  & + & {
+    margin-left: 12px;
+  }
+  &:hover,
+  &:focus {
+    color: var(--ds-button-hover-text-color);
+    border-color: var(--ds-button-hover-border-color);
+    background-color: var(--ds-button-hover-bg-color);
+    outline: none;    
+  }
+  &:active {
+    color: var(--ds-button-active-text-color);
+    border-color: var(--ds-button-active-border-color);
+    background-color: var(--ds-button-active-bg-color);
+    outline: none;
+  }
+  &.is-plain {
+    --ds-button-hover-text-color: var(--ds-color-primary);
+    --ds-button-hover-bg-color: var(--ds-fill-color-blank);
+    --ds-button-hover-border-color: var(--ds-color-primary);    
+  }
+  /*round*/
+  &.is-round {
+    border-radius: var(--ds-border-radius-round);
+  }
+  /*circle*/
+  &.is-circle {
+    border-radius: 50%;
+    padding: 8px;
+  }
+  /*disabled*/
+  &.is-disabled, &.is-disabled:hover, &.is-disabled:focus, 
+  &[disabled], &[disabled]:hover, &[disabled]:focus 
+  {
+    color: var(--ds-button-disabled-text-color);
+    cursor: not-allowed;
+    background-image: none;
+    background-color: var(--ds-button-disabled-bg-color);
+    border-color: var(--ds-button-disabled-border-color);
+  }
+
+  .ds-icon + span {
+    margin-left: 6px;
+  } 
+}
+
+@each $val in primary, success, warning, info, danger {
+  .ds-button--$(val) {
+    --ds-button-text-color: var(--ds-color-white);
+    --ds-button-bg-color: var(--ds-color-$(val));
+    --ds-button-border-color: var(--ds-color-$(val));
+    --ds-button-outline-color: var(--ds-color-$(val)-light-5);
+    --ds-button-active-color: var(--ds-color-$(val)-dark-2);
+    --ds-button-hover-text-color: var(--ds-color-white);
+    --ds-button-hover-bg-color: var(--ds-color-$(val)-light-3);
+    --ds-button-hover-border-color: var(--ds-color-$(val)-light-3);
+    --ds-button-active-bg-color: var(--ds-color-$(val)-dark-2);
+    --ds-button-active-border-color: var(--ds-color-$(val)-dark-2);
+    --ds-button-disabled-text-color: var(--ds-color-white);
+    --ds-button-disabled-bg-color: var(--ds-color-$(val)-light-5);
+    --ds-button-disabled-border-color: var(--ds-color-$(val)-light-5);
+  }
+  .ds-button--$(val).is-plain {
+    --ds-button-text-color: var(--ds-color-$(val));
+    --ds-button-bg-color: var(--ds-color-$(val)-light-9);
+    --ds-button-border-color: var(--ds-color-$(val)-light-5);
+    --ds-button-hover-text-color: var(--ds-color-white);
+    --ds-button-hover-bg-color: var(--ds-color-$(val));
+    --ds-button-hover-border-color: var(--ds-color-$(val));
+    --ds-button-active-text-color: var(--ds-color-white);
+  }
+}
+
+.ds-button--large {
+  --ds-button-size: 40px;
+  height: var(--ds-button-size);
+  padding: 12px 19px;
+  font-size: var(--ds-font-size-base);
+  border-radius: var(--ds-border-radius-base);
+}
+.ds-button--small {
+  --ds-button-size: 24px;
+  height: var(--ds-button-size);
+  padding: 5px 11px;
+  font-size: 12px;
+  border-radius: calc(var(--ds-border-radius-base) - 1px);
+}
