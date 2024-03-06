@@ -13,7 +13,7 @@
     ref="_ref"
     :disabled="disabled || loading"
   >
-    <Icon icon="spinner" spin v-if="loading" />
+    <Icon icon="spinner" spin disabled v-if="loading" />
     <Icon :icon="icon" v-if="icon" />
     <span><slot/></span>
   </button>
