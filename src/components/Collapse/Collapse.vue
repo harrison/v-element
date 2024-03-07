@@ -27,21 +27,23 @@ if (props.accordion && props.modelValue.length > 1) {
 
 // 子组件标题点击事件
 const handleItemClick = (name: NameType) => {
-
+  let _activeNames = [ ...activeNames.value ]
   if (props.accordion) {
-    activeNames.value = [activeNames.value[0] === name ? '' : name]
+    _activeNames = [activeNames.value[0] === name ? '' : name]
+    activeNames.value = _activeNames
   } else {
     const index = activeNames.value.indexOf(name)
     // 如果name存在于数组中, 则删除, 否则添加
     if (index != -1) {
-      activeNames.value.splice(index, 1)
+      _activeNames.splice(index, 1)
     } else {
-      activeNames.value.push(name)
+      _activeNames.push(name)
     }
+    activeNames.value = _activeNames
   }
 
-  emits('update:modelValue', activeNames.value)
-  emits('change', activeNames.value)
+  emits('update:modelValue', _activeNames)
+  emits('change', _activeNames)
 }
 
 // 向外暴露上下文

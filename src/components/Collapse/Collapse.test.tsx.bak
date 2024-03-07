@@ -1,0 +1,66 @@
+import { expect, describe, test, vi } from 'vitest'
+import { mount } from '@vue/test-utils'
+
+import Collapse from './Collapse.vue'
+import Item from './CollapseItem.vue'
+import { h } from 'vue'
+
+describe('collapse.vue', () => {
+  test('basic collapse', async () => {
+    const onChange = vi.fn()
+    const wrapper = mount(() => (
+      <Collapse modelValue={['a']} onChange={onChange}>
+        <Item name="a" title="Title A">
+          content a
+        </Item>
+
+        <Item name="b" title='Title B'>
+          content b
+        </Item>
+
+        <Item name="c" disabled title='Title c '>
+          content c
+        </Item>
+      </Collapse>
+    ), {
+      global: {
+        stubs: ['Icon']
+      },
+      attachTo: document.body
+    })
+
+    const headers = wrapper.findAll('.ds-collapse-item__header')
+    const contents = wrapper.findAll('.ds-collapse-item__content__wrapper')
+
+    // 数量
+    expect(headers.length).toBe(3)
+    expect(contents.length).toBe(3)
+
+    // 标题
+    const firstHeader = headers[0]
+    const secondHeader = headers[1]
+    const thirdHeader = headers[2]
+    expect(firstHeader.text()).toBe('Title A')
+
+    // 内容
+    const firstContent = contents[0]
+    const secondContent = contents[1]
+    const thirdContent = contents[2]
+    expect(firstContent.text()).toBe('content a')
+    expect(firstContent.isVisible()).toBeTruthy()
+
+    // 行为
+    await firstHeader.trigger('click')
+    expect(firstContent.isVisible()).toBeFalsy()
+    expect(onChange).toHaveBeenCalledWith([])
+    await secondHeader.trigger('click')
+    expect(secondContent.isVisible()).toBeTruthy()
+    expect(onChange).toHaveBeenCalledWith(['b'])
+
+    // disabled
+    expect(thirdHeader.classes()).toContain('is-disabled')
+    await thirdHeader.trigger('click')
+    expect(thirdContent.isVisible()).toBeFalsy()
+    expect(onChange).toHaveBeenCalledWith(['b'])
+  })
+})
