@@ -5,6 +5,8 @@ import Collapse from './components/Collapse/Collapse.vue'
 import CollapseItem from './components/Collapse/CollapseItem.vue'
 import Icon from './components/Icon/Icon.vue'
 import Alert from './components/Alert/Alert.vue'
+import Popper from './components/Popper/Popper.vue'
+import Tooltip from './components/Tooltip/Tooltip.vue'
 import type { ButtonInterface } from './components/Button/types'
 import type { AlertInstance } from './components/Alert/types'
 
@@ -98,6 +100,19 @@ onMounted(() => {
   <Alert content="Warning" type="warning" icon="circle-exclamation" center/>
   <Alert content="Danger" type="danger" effect="dark" />
   <Alert content="Info" :closable="false" type="info" effect="dark" />
+
+  <hr>
+  <h1>Popper组件</h1>
+  <Popper></Popper>
+
+  <hr>
+  <h1>Tooltip组件</h1>
+  <Tooltip content="Hello Tooltip" placement="right">
+    <img alt="Vue logo" src="./assets/logo.svg" width="125" height="125" />
+    <template #content>
+      <h1>content插槽</h1>
+    </template>
+  </Tooltip>
 </template>
 
 <style scoped>
