@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref,watch } from 'vue';
+import { onMounted, reactive, ref,watch } from 'vue';
 import type { TooltipProps, TooltipEmits } from './types';
 import { createPopper, type Instance } from '@popperjs/core';
 
 const props = withDefaults(defineProps<TooltipProps>(), {
-  placement: 'bottom'
+  placement: 'bottom',
+  trigger: 'click'
 })
 
 const emits = defineEmits<TooltipEmits>()
@@ -12,13 +13,46 @@ const isOpen = ref(false)
 
 const triggerNode = ref<HTMLElement>()
 const popperNode = ref<HTMLElement>()
+const events: Record<string, any> = reactive({})
+const outEvent: Record<string, any> = reactive({})
 
 let popperInstance: Instance
+
+onMounted(() => {
+  attachEvent()
+})
+
+const open = () => {
+  isOpen.value = true
+  emits('visible-change',isOpen.value)
+}
+
+const close = () => {
+  isOpen.value = false
+  emits('visible-change',isOpen.value)
+}
+
+const attachEvent = () => {
+  if(props.trigger == 'click') {
+    events['click'] = togglePopper
+  } else if (props.trigger == 'hover') {
+    events['mouseenter'] = open
+    outEvent['mouseleave'] = close
+  }
+}
 
 const togglePopper = ()=>{
   isOpen.value = !isOpen.value
   emits('visible-change',isOpen.value)
 }
+
+watch(() => props.trigger, (newValue, oldValue) => {
+  if(newValue != oldValue) {
+    events.value = {}
+    outEvent.value = {}
+    attachEvent()
+  }
+})
 
 watch(isOpen, (newValue) => {
   if(newValue) {
@@ -37,8 +71,8 @@ watch(isOpen, (newValue) => {
 </script>
 
 <template>
-  <div class="ds-tooltip" style="margin-bottom: 100px;">
-    <div class="ds-tooltip_trigger" ref="triggerNode" @click="togglePopper">
+  <div class="ds-tooltip" style="margin-bottom: 100px;" v-on="outEvent">
+    <div class="ds-tooltip_trigger" ref="triggerNode" v-on="events">
       <slot />
     </div>
 
@@ -53,5 +87,10 @@ watch(isOpen, (newValue) => {
 <style scpoed>
 .ds-tooltip_trigger {
   display: inline-block;
+  border: 0.01rem solid #f00;
+}
+
+.ds-tooltip_popper {
+  border: 0.01rem solid #ff0;
 }
 </style>

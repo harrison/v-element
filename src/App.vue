@@ -107,7 +107,7 @@ onMounted(() => {
 
   <hr>
   <h1>Tooltip组件</h1>
-  <Tooltip content="Hello Tooltip" placement="right">
+  <Tooltip content="Hello Tooltip" placement="right" trigger="hover">
     <img alt="Vue logo" src="./assets/logo.svg" width="125" height="125" />
     <template #content>
       <h1>content插槽</h1>
