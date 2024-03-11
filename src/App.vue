@@ -9,8 +9,11 @@ import Popper from './components/Popper/Popper.vue'
 import Tooltip from './components/Tooltip/Tooltip.vue'
 import type { ButtonInterface } from './components/Button/types'
 import type { AlertInstance } from './components/Alert/types'
+import { TooltipInstance } from './components/Tooltip/types'
 
 const buttonRef = ref<ButtonInterface | null>(null)
+
+const tooltipRef = ref<TooltipInstance | null>(null)
 
 const activeItem = ref(['a'])
 
@@ -24,7 +27,15 @@ setTimeout(() => {
   alert.value?.hide()
 }, 2000)
 
-function alertClose() {
+const open = () => {
+  tooltipRef.value?.show()
+}
+
+const close = () => {
+  tooltipRef.value?.hide()
+}
+
+const alertClose = () => {
   console.log('alert closed')
 }
 
@@ -107,12 +118,15 @@ onMounted(() => {
 
   <hr>
   <h1>Tooltip组件</h1>
-  <Tooltip content="Hello Tooltip" placement="right" trigger="hover">
+  <Tooltip content="Hello Tooltip" placement="right" trigger="click" manual ref="tooltipRef">
     <img alt="Vue logo" src="./assets/logo.svg" width="125" height="125" />
     <template #content>
       <h1>content插槽</h1>
     </template>
   </Tooltip>
+
+  <Button @click="open">显示</Button>
+  <Button @click="close">隐藏</Button>
 </template>
 
 <style scoped>
