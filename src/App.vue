@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 import Button from './components/Button/Button.vue'
 import Collapse from './components/Collapse/Collapse.vue'
 import CollapseItem from './components/Collapse/CollapseItem.vue'
@@ -9,7 +9,8 @@ import Popper from './components/Popper/Popper.vue'
 import Tooltip from './components/Tooltip/Tooltip.vue'
 import type { ButtonInterface } from './components/Button/types'
 import type { AlertInstance } from './components/Alert/types'
-import { TooltipInstance } from './components/Tooltip/types'
+import type { TooltipInstance } from './components/Tooltip/types'
+import type { Options } from '@popperjs/core'
 
 const buttonRef = ref<ButtonInterface | null>(null)
 
@@ -20,6 +21,11 @@ const activeItem = ref(['a'])
 const iconSize = ref<any>('3x')
 
 const alert = ref<AlertInstance | null>(null)
+
+const popper_options: Partial<Options> = reactive({
+  placement: "right-end",
+  strategy: "fixed"
+})
 
 setTimeout(() => {
   activeItem.value.push('b')
@@ -118,12 +124,14 @@ onMounted(() => {
 
   <hr>
   <h1>Tooltip组件</h1>
-  <Tooltip content="Hello Tooltip" placement="right" trigger="click" manual ref="tooltipRef">
+  <Tooltip content="Hello Tooltip" trigger="click" placement="right" ref="tooltipRef" :popper_options="popper_options">
     <img alt="Vue logo" src="./assets/logo.svg" width="125" height="125" />
-    <template #content>
+    <!-- <template #content>
       <h1>content插槽</h1>
-    </template>
+    </template> -->
   </Tooltip>
+
+  <br />
 
   <Button @click="open">显示</Button>
   <Button @click="close">隐藏</Button>
